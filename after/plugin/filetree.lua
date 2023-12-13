@@ -1,15 +1,16 @@
 require("nvim-tree").setup({
     view = {
-        width = 30,
+        width = 40,
     },
     renderer = {
         group_empty = true,
     },
     filters = {
-        dotfiles = true,
+        dotfiles = false,
     },
     disable_netrw = true,
     update_focused_file = {
-      enabled = true
+      enabled = false
     },
+    git = { ignore = false },
 })
