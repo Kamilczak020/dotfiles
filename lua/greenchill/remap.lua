@@ -38,3 +38,22 @@ vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>")
 vim.keymap.set("n", "<leader><leader>", function()
   vim.cmd("so")
 end)
+
+-- Case-sensitive movement
+
+local camelchar = "A-Z0-9.,;:{([`'\""
+
+_G.search_backward = function()
+  vim.fn.search('\\C\\<\\<Bar>\\%(^\\<Bar>[^'..camelchar..']\\@<=\\)['..camelchar..']\\<Bar>['..camelchar..']\\ze\\%([^'..camelchar..']\\&\\>\\@!\\)\\<Bar>\\%^', 'bW')
+end
+
+_G.search_forward = function()
+  vim.fn.search('\\C\\<\\<Bar>\\%(^\\<Bar>[^'..camelchar..']\\@<=\\)['..camelchar..']\\<Bar>['..camelchar..']\\ze\\%([^'..camelchar..']\\&\\>\\@!\\)\\<Bar>\\%$', 'W')
+end
+
+vim.keymap.set('n', '<C-Left>', ':lua search_backward()<CR>', { silent = true, noremap = true })
+vim.keymap.set('n', '<C-Right>', ':lua search_forward()<CR>', { silent = true, noremap = true })
+vim.keymap.set('i', '<C-Left>', '<C-o>:lua search_backward()<CR>', { silent = true, noremap = true })
+vim.keymap.set('i', '<C-Right>', '<C-o>:lua search_forward()<CR>', { silent = true, noremap = true })
+vim.keymap.set('v', '<C-Left>', ':lua search_backward()<CR>gv', { silent = true, noremap = true })
+vim.keymap.set('v', '<C-Right>', ':lua search_forward()<CR>gv', { silent = true, noremap = true })
