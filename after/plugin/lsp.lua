@@ -115,6 +115,12 @@ lspconfig.tsserver.setup {
   }
 }
 
+lspconfig.sqlls.setup {
+  on_attach = function(client, bufnr)
+    require('sqlls').on_attach(client, bufnr)
+  end
+}
+
 require('rust-tools').setup({
   server = {
     capabilities = require('cmp_nvim_lsp').default_capabilities()
