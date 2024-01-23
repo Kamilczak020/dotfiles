@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>ds", vim.cmd.NvimTreeFindFile)
-vim.keymap.set("n", "<leader>,", vim.cmd.EslintFixAll)
--- vim.keymap.set("n", "<leader>,", vim.lsp.buf.format)
+-- vim.keymap.set("n", "<leader>,", vim.cmd.EslintFixAll)
+vim.keymap.set("n", "<leader>,", vim.lsp.buf.format)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

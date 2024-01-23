@@ -20,6 +20,7 @@ return require('packer').startup(function(use)
     use { 'tpope/vim-fugitive' }
     use { 'mattkubej/jest.nvim' }
     use { 'lukas-reineke/indent-blankline.nvim' }
+    use { 'https://github.com/hashivim/vim-terraform', as = 'vim-terraform'}
     use { 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim', as = 'rainbow-delimiters' }
     use { 'https://github.com/windwp/nvim-ts-autotag', as = 'nvim-ts-autotag' }
     use { 'https://github.com/terrortylor/nvim-comment', as = 'nvim-comment' }
