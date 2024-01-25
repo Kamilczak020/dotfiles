@@ -139,6 +139,18 @@ lspconfig.yamlls.setup {
   end
 }
 
+lspconfig.dockerls.setup {
+  on_attach = function(client, bufnr)
+    require('dockerls').on_attach(client, bufnr)
+  end
+}
+
+lspconfig.docker_compose_language_service.setup {
+  on_attach = function(client, bufnr)
+    require('docker_compose_language_service').on_attach(client, bufnr)
+  end
+}
+
 require('rust-tools').setup({
   server = {
     capabilities = require('cmp_nvim_lsp').default_capabilities()
