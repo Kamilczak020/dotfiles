@@ -26,6 +26,7 @@ return require('packer').startup(function(use)
     use { 'https://github.com/terrortylor/nvim-comment', as = 'nvim-comment' }
     use { 'windwp/nvim-autopairs' }
     use { 'nvim-lualine/lualine.nvim' }
+    -- use { 'nvimtools/none-ls.nvim' }
 
     use {
         'nvim-tree/nvim-tree.lua',

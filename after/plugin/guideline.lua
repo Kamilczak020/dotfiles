@@ -1,13 +1,16 @@
-vim.cmd [[ highlight IndentBlanklineChar guifg=#232a2d gui=nocombine ]]
-vim.cmd [[ highlight IndentBlanklineContextChar guifg=#48565D gui=nocombine ]]
+local hooks = require('ibl.hooks')
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+  vim.api.nvim_set_hl(0, "HighlightGray", { fg = "#232a2d" })
+  vim.api.nvim_set_hl(0, "HighlightContext", { fg = "#48565D" })
+end)
 
-require('indent_blankline').setup {
-    show_current_context = true,
-    show_current_context_start = false,
-
-    use_treesitter = true,
-    show_trailing_blankline_indent = false,
-    char_highlight_list = {
-        "IndentBlanklineChar",
-    }
+require('ibl').setup {
+  scope = {
+    enabled = true,
+    show_start = false,
+    highlight = "HighlightContext"
+  },
+  indent = {
+    highlight = "HighlightGray"
+  }
 }
