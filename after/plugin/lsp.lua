@@ -3,9 +3,9 @@ local lspconfig = require('lspconfig')
 
 lsp.preset('recommended')
 lsp.ensure_installed({
-  'tsserver',
-  'eslint',
+  'ts_ls',
   'lua_ls',
+  'eslint',
   'rust_analyzer',
 })
 
@@ -101,7 +101,11 @@ local function rename_file()
   vim.lsp.buf.execute_command(params)
 end
 
-lspconfig.tsserver.setup {
+
+local mason_packages = vim.fn.stdpath("data") .. "/mason/packages"
+local volar_path = mason_packages .. "/vue-language-server/node_modules/@vue/language-server"
+
+lspconfig.ts_ls.setup {
   commands = {
     RenameFile = {
       rename_file,
@@ -109,10 +113,66 @@ lspconfig.tsserver.setup {
     }
   },
   init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = volar_path,
+        languages = { "vue" },
+      },
+    },
     preferences = {
       importModuleSpecifierPreference = 'non-relative',
-    }
-  }
+    },
+  },
+  settings = {
+    typescript = {
+      inlayHints = {
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+  },
+}
+
+lspconfig.volar.setup {
+  filetypes = { "vue" },
+  init_options = {
+    vue = {
+      hybridMode = false,
+    },
+  },
+  settings = {
+    typescript = {
+      inlayHints = {
+        enumMemberValues = {
+          enabled = true,
+        },
+        functionLikeReturnTypes = {
+          enabled = true,
+        },
+        propertyDeclarationTypes = {
+          enabled = true,
+        },
+        parameterTypes = {
+          enabled = true,
+          suppressWhenArgumentMatchesName = true,
+        },
+        variableTypes = {
+          enabled = true,
+        },
+      },
+    },
+  },
+}
+
+lspconfig.cssls.setup {
+  capabilities = capabilities
 }
 
 lspconfig.sqlls.setup {
@@ -150,6 +210,16 @@ lspconfig.docker_compose_language_service.setup {
     require('docker_compose_language_service').on_attach(client, bufnr)
   end
 }
+
+-- lspconfig.eslint.setup({
+--   on_attach = function(client, bufnr)
+--     require('eslint').on_attach(client, bufnr)
+--   end,
+--   settings = {
+--     -- ESLint debug logs
+--     env = { DEBUG = "eslint:*" },
+--   },
+-- })
 
 require('rust-tools').setup({
   server = {
@@ -197,3 +267,4 @@ vim.diagnostic.config({
   virtual_text = true
 })
 
+vim.lsp.set_log_level("off")
